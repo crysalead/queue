@@ -1,0 +1,26 @@
+language: php
+
+php:
+  - 7.1
+  - 7.2
+  - 7.3
+  - 7.4
+
+before_script:
+  - if [[ $TRAVIS_SECURE_ENV_VARS = "true" ]]; then composer config -g github-oauth.github.com $GITHUB_COMPOSER_AUTH; fi
+  - docker run -p 10000:10000 -p 10001:10001 -d mcr.microsoft.com/azure-storage/azurite
+  - docker run -p 9324:9324 -d softwaremill/elasticmq
+  - docker run -p 8681:8681 -d messagebird/gcloud-pubsub-emulator:latest
+  - docker run -p 11300:11300 -d schickling/beanstalkd
+  - docker run -p 6379:6379 -d redis
+  - composer install --no-interaction
+
+script: bin/kahlan --coverage=3 --clover=clover.xml
+
+after_success:
+  - "if [ $(phpenv version-name) = '7.4' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi"
+  - "if [ $(phpenv version-name) = '7.4' ]; then php ocular.phar code-coverage:upload --format=php-clover 'clover.xml'; fi"
+
+env:
+  global:
+    secure: JNyY5A19hqCesn5nj3D7JgODl1tiiGRXsdNdsllBWhGjiB8Gl5kl9MJ2hDB5StZnbfy+Yv+BOhEiXv5jCiiHWHuIBlT0/34SQLQSqC2pm55oqHMmYT7Dmb9rX6n/n5Civ+Od2TKPzfF1RRSWfhWfnav2WWvnM8FRaTon7mqJPjKCeO0p76bBI0uvZbRLLallOL0idNmxO7VxOidf0iaqSA5pVfcOzMMNH3h2tfp0sP8gWP+UACdA9gVCGonCx+0wvPkC03u9FUV+9PeVh/I8xtKR4QZ6BvC5R62Dj3YfeSOLPybUmm2ni+0pA8XjCnXgdEfRQOvCda+tyKvKupgGBozm+e3twmn7SCzwdVG7CyRYIlXvRZ2egAXtS3mV6w3vrZs8cgzQMplKjiZm+RmLEVGBFdwwBBW8ReSvDAAsMtgAQfxuMz5AKVhlzPgypHJBrWLH0cu4/nuuqRAXesGe+r12W3pF4KqV3nBy10RcHOw2bAL82oKJeFTBh5wWWi7PzXLqi2X2NyD5o80gOzmWGhdvgYRaIUbfAF8zaUzBPf0KEH9SUb3UlFBCLGt2XLYgm3XY95XWak99STI1ZN99W7v79faAzDmuF7yfwvHIWgOfPaVuRWMlwH8GrSsZw5e/TXXHFw8jpJThlwbQ35oz31FXw/Zd6W0GOpEmaedYCCk=
