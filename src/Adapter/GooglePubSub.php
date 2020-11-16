@@ -83,7 +83,7 @@ class GooglePubSub extends \Lead\Queue\Broker
         return array_map(
             function($message) {
                 $payload = json_decode(base64_decode($message->data()), true);
-                return $this->createJob($payload, $message, $message->deliveryAttempt() ?? 0);
+                return $this->createJob($payload ? (array) $payload : [], $message, $message->deliveryAttempt() ?? 0);
             },
             $messages ?: []
         );
