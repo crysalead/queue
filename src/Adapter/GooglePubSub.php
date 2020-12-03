@@ -75,10 +75,18 @@ class GooglePubSub extends \Lead\Queue\Broker
     {
         $pullOptions = [
             'maxMessages' => (int) $max,
-            'returnImmediately' => empty($options['timeout'])
+            'returnImmediately' => empty($options['timeout']),
+            'autoCreateSubscription' => true
         ];
 
-        $messages = $this->_client->subscription($this->_name)->pull($pullOptions);
+        $autoCreateSubscription = $pullOptions['autoCreateSubscription'];
+        unset($pullOptions['autoCreateSubscription']);
+
+        $subscription = $this->_client->subscription($this->_name, $this->_topic);
+        if ($autoCreateSubscription && !$subscription->exists()) {
+            $subscription->create();
+        }
+        $messages = $subscription->pull($pullOptions);
 
         return array_map(
             function($message) {
