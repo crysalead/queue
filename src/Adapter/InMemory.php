@@ -23,7 +23,7 @@ class InMemory extends \Lead\Queue\Broker
      *
      * @var array<mixed>
      */
-    protected $_jobs;
+    protected $_jobs = [];
 
     /**
      * InMemory constructor

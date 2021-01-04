@@ -40,4 +40,15 @@ describe("InMemory", function() {
 
     });
 
+    describe("->pull()", function() {
+
+        it("returns null when no job exists", function() {
+
+            $job = $this->broker->pull();
+            expect($job)->toBe(null);
+
+        });
+
+    });
+
 });
