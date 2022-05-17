@@ -1,13 +1,12 @@
 language: php
 
 php:
-  - 7.1
-  - 7.2
-  - 7.3
   - 7.4
+  - 8.1
 
 before_script:
   - if [[ $TRAVIS_SECURE_ENV_VARS = "true" ]]; then composer config -g github-oauth.github.com $GITHUB_COMPOSER_AUTH; fi
+  - echo 'xdebug.mode = coverage' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - docker run -p 10000:10000 -p 10001:10001 -d mcr.microsoft.com/azure-storage/azurite
   - docker run -p 9324:9324 -d softwaremill/elasticmq
   - docker run -p 8681:8681 -d messagebird/gcloud-pubsub-emulator:latest
@@ -23,4 +22,4 @@ after_success:
 
 env:
   global:
-    secure: JNyY5A19hqCesn5nj3D7JgODl1tiiGRXsdNdsllBWhGjiB8Gl5kl9MJ2hDB5StZnbfy+Yv+BOhEiXv5jCiiHWHuIBlT0/34SQLQSqC2pm55oqHMmYT7Dmb9rX6n/n5Civ+Od2TKPzfF1RRSWfhWfnav2WWvnM8FRaTon7mqJPjKCeO0p76bBI0uvZbRLLallOL0idNmxO7VxOidf0iaqSA5pVfcOzMMNH3h2tfp0sP8gWP+UACdA9gVCGonCx+0wvPkC03u9FUV+9PeVh/I8xtKR4QZ6BvC5R62Dj3YfeSOLPybUmm2ni+0pA8XjCnXgdEfRQOvCda+tyKvKupgGBozm+e3twmn7SCzwdVG7CyRYIlXvRZ2egAXtS3mV6w3vrZs8cgzQMplKjiZm+RmLEVGBFdwwBBW8ReSvDAAsMtgAQfxuMz5AKVhlzPgypHJBrWLH0cu4/nuuqRAXesGe+r12W3pF4KqV3nBy10RcHOw2bAL82oKJeFTBh5wWWi7PzXLqi2X2NyD5o80gOzmWGhdvgYRaIUbfAF8zaUzBPf0KEH9SUb3UlFBCLGt2XLYgm3XY95XWak99STI1ZN99W7v79faAzDmuF7yfwvHIWgOfPaVuRWMlwH8GrSsZw5e/TXXHFw8jpJThlwbQ35oz31FXw/Zd6W0GOpEmaedYCCk=
+    secure: HSEyzHxfy+FAs2HEVr5IdANrLpWzrw24pD0Q0u7D6J4+4ZW62aBfdz2oZUte0F6JU0dvF95l4kN8CpWxEyDg8hWYOkAc3F9f7fq1jKeU0gumg8MyCrvvN7xvhtLVvHw93rEguG+3zFeufo4ADrjBK88sFiieTiPrnsxTXH0yIMWHBeWFhTzLvihssoPWjV2RI/dS54Jt27QG8qyZiMFbj7rodEEje0LmqcmL6pKXoRpZwfKo32U5IX4N7Z5DSQ1nt1lkRUuK/FOu50X5Xjlb76OiLIaANCITkZUBzh8Sj2TNaxrTNxgFaoCEFHsD8sir9/OGaniHlV0jRKzdcXQu0qzKkyfwMj1u+0H8K4/H5HpXq/kj93UQ8aW8kVM+ny00BeG/WoLLkcnZ6Zjf12xIxWZ+gyQoeTWyiV7wZhccOz/Y5JC6G3JX8N3m0v9wSZ7niKeMajfYfTuYbQcSvefQ1NJN72Ou32yvEwYXcVGmLthrP+2tCYTXj9qVPTRlkrQOgHedXx4M/eCLH3/Bi4fgERlpPNCUeYOQ5lRbwWDDp9gsV2oCH/AJiRAEt673AroTEXBgcv6zrHLRlyDqEZ4aL2LWlAVtO9xj/3v1B4R5Q97+hlc3zoF2gUYDizCvmazA7reRmH9EqGaBlNw8jsxcthW4lIaS44WoNXBkbGqztGE=
