@@ -11,16 +11,16 @@
         "predis/predis": "To add support for Redis based queue and pub/sub functionality."
     },
     "require": {
-        "php": ">=7.0",
+        "php": ">=8.3",
         "ext-json": "*"
     },
     "require-dev": {
-        "aws/aws-sdk-php": "~3.0",
-        "google/cloud-pubsub": "^1.29",
-        "kahlan/kahlan": "~5.0",
+        "aws/aws-sdk-php": "^3",
+        "google/cloud-pubsub": "^2",
+        "kahlan/kahlan": "^6",
         "microsoft/azure-storage-queue": "^1.3",
-        "pda/pheanstalk": "~4.0",
-        "predis/predis": "~1.0"
+        "pda/pheanstalk": "^6",
+        "predis/predis": "^2"
     },
     "autoload": {
         "psr-4": {

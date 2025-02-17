@@ -36,6 +36,13 @@ use Google\Cloud\PubSub\Topic;
 class GooglePubSub extends \Lead\Queue\Broker
 {
     /**
+     * Queue topic.
+     *
+     * @var string
+     */
+    protected $_topic;
+
+    /**
      * Google Cloud PubSub adapter.
      *
      * @param string $subscription
@@ -75,7 +82,6 @@ class GooglePubSub extends \Lead\Queue\Broker
     {
         $pullOptions = [
             'maxMessages' => (int) $max,
-            'returnImmediately' => empty($options['timeout']),
             'autoCreateSubscription' => true
         ];
 

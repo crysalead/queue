@@ -60,6 +60,13 @@ class Job
     protected $_failed = false;
 
     /**
+     * The payload.
+     *
+     * @var array
+     */
+    protected $_payload = [];
+
+    /**
      * Get the job identifier.
      *
      * @return string

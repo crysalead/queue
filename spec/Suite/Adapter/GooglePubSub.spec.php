@@ -8,14 +8,23 @@ use Lead\Queue\Adapter\GooglePubSub;
 describe("GooglePubSub", function() {
 
     beforeAll(function() {
-        // docker run -p 8681:8681 -d messagebird/gcloud-pubsub-emulator
-        // docker run --rm --tty --interactive --publish 8681:8681 messagebird/gcloud-pubsub-emulator
+        // docker run -publish 8681:8681 google/cloud-sdk:emulators /bin/bash -c "gcloud beta emulators pubsub start --project=some-project-id --host-port='0.0.0.0:8681'"
+        // docker run --rm --tty --interactive --publish 8681:8681 google/cloud-sdk:emulators /bin/bash -c "gcloud beta emulators pubsub start --project=some-project-id --host-port='0.0.0.0:8681'"
+
 
         $this->broker = new GooglePubSub([
             'name' => 'default',
             'client' => new PubSubClient([
                 'hasEmulator' => true,
-                'emulatorHost' => 'localhost:8681'
+                'emulatorHost' => 'localhost:8681',
+                'credentialsConfig' => [
+                    'keyFile' => [
+                        "client_id"     => "fake-fake-fake.apps.googleusercontent.com",
+                        "client_secret" => "fake-fake-fake",
+                        "refresh_token" => "fake-fake-fake",
+                        "type"          => "authorized_user",
+                    ]
+                ]
             ])
         ]);
         $this->topic = $this->broker->client()->topic('default');
