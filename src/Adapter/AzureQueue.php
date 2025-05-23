@@ -110,7 +110,7 @@ class AzureQueue extends \Lead\Queue\Broker
             $message->getMessageId(),
             $message->getPopReceipt(),
             json_encode($job->payload()),
-            0
+            $options['delay'] ?? 0
         );
     }
 }

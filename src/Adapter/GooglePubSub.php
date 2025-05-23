@@ -118,6 +118,6 @@ class GooglePubSub extends \Lead\Queue\Broker
     public function release($job, $options = [])
     {
         $message = $job->message();
-        $this->_client->subscription($this->_name)->modifyAckDeadline($message, 0);
+        $this->_client->subscription($this->_name)->modifyAckDeadline($message, $options['delay'] ?? 0);
     }
 }
